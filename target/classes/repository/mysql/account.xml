@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doomole.stockproject.repository.AccountRepository">
+    <!-- 사용자 추가 -->
+    <insert id="insertAccount" useGeneratedKeys="true" keyProperty="accountIdx">
+        /* AccountRepository insertAccount */
+        INSERT INTO tb_account(
+            account_id, name, password, create_datetime, update_datetime, password_change_datetime
+        )
+        VALUES (
+                   #{accountId}, #{name}, #{password}, #{createDatetime}, #{updateDatetime}, #{passwordChangeDatetime}
+               )
+    </insert>
+
+    <!-- 아이디로 사용자 존재여부 확인 -->
+    <select id="selectAccountIdExistByAccountId" resultType="int">
+        SELECT EXISTS (
+            SELECT
+                ac.account_idx
+            FROM
+                tb_account ac
+            WHERE
+                ac.account_id = #{accountId}
+        ) AS selectExist
+    </select>
+</mapper>

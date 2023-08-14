@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://127.0.0.1:3306/stockProject?socketTimeout=300000
+    username: root
+    password: 1234
+
+#server port
+server:
+  port: 8082
+  session:
+    timeout: 3600
+
+serverInfo:
+  webURL: http://localhost:3000
+
+jwt:
+  secret:
