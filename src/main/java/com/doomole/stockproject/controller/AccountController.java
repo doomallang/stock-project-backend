@@ -25,7 +25,7 @@ public class AccountController {
         String name = reqAccount.getName();
 
         accountService.addAccount(accountId, password, name);
-
+        System.out.println("가입 완료.");
         return new ResponseEntity<>("가입이 완료되었습니다.", HttpStatus.OK);
     }
 
