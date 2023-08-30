@@ -8,4 +8,6 @@ public interface AccountRepository {
     public void insertAccount(Account account);
 
     public int selectAccountIdExistByAccountId(String accountId);
+
+    public int updateAccountDatetime(String accountId, String updateDatetime);
 }

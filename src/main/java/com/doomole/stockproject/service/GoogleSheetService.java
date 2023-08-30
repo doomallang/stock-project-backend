@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +38,7 @@ public class GoogleSheetService {
     }
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
-            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         String spreadSheetId = "1PrjniLIPwS-eHicw9oRMpZffkL38PQQmm7N1dc59fAI";
         String range = "sheet1!A1:C4"; // Sheet1의 A1부터 C3까지
@@ -55,6 +57,5 @@ public class GoogleSheetService {
         service.spreadsheets().values().update(spreadSheetId, range, data)
                 .setValueInputOption("USER_ENTERED")
                 .execute();
-
     }
 }
