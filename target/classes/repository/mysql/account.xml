@@ -14,6 +14,7 @@
 
     <!-- 아이디로 사용자 존재여부 확인 -->
     <select id="selectAccountIdExistByAccountId" resultType="int">
+        /* AccountRepository - selectAccountIdExistByAccountId */
         SELECT EXISTS (
             SELECT
                 ac.account_idx
@@ -23,4 +24,14 @@
                 ac.account_id = #{accountId}
         ) AS selectExist
     </select>
+
+    <update id="updateAccountDatetime">
+        /* AccountRepository - updateAccountDatetime */
+        UPDATE tb_account
+        SET
+            updateDatetime = #{updateDatetime}
+        <where>
+            account_id = #{accountId}
+        </where>
+    </update>
 </mapper>
