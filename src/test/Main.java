@@ -1,30 +1,30 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = null;
+        int N = Integer.parseInt(br.readLine());
+        int[] arr = new int[N];
 
-        st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-
-        Set<String> set = new HashSet<>();
-        for(int i = 0; i < n; i++) {
-            set.add(br.readLine());
+        for(int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
-        int count = 0;
-        for(int i = 0; i < m; i++) {
-            String s = br.readLine();
-            if(set.contains(s)) {
-                count++;
-            }
+        Arrays.sort(arr);
+        int gcd = arr[1] - arr[0];
+        for(int i = 1; i < N - 1; i++) {
+            int distance = arr[i+1] - arr[i];
+            gcd = getGCD(distance, gcd);
         }
-        System.out.println(count);
+        System.out.println(((arr[arr.length-1] - arr[0]) / gcd) + 1 - N);
+    }
+
+    public static int getGCD(int num1, int num2) {
+        if(num1 % num2 == 0) {
+            return num2;
+        }
+        return getGCD(num2, num1%num2);
     }
 }
