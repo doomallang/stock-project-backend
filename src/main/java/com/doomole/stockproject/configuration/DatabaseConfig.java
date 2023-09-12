@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan(basePackages= {"com.doomole.stockproject.repository"}, sqlSessionFactoryRef="sqlSessionFactory")
 public class DatabaseConfig {
+    private final String TYPE_ALIASES_PACKAGE = "com.doomole.stockproject.model, com.doomole.stockproject.dto";
     @Bean(name = "sqlSessionFactory")
     @Primary
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource DataSource, ApplicationContext applicationContext) throws Exception {
@@ -27,6 +28,7 @@ public class DatabaseConfig {
         prop.setUseGeneratedKeys(true);
         sqlSessionFactoryBean.setConfiguration(prop);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:repository/mysql/*.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage(TYPE_ALIASES_PACKAGE);
 
         return sqlSessionFactoryBean.getObject();
     }

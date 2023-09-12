@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doomole.stockproject.repository.KakaoBotRepository">
+    <!-- recommend Type 조회 -->
+    <select id="selectRecommendType" resultType="RecommendType">
+        /* KakaoBotRepository - selectRecommendType */
+        SELECT
+            recommend_type_idx
+            , recommend_type_name
+            , is_random
+            , read_count
+            , parent_idx
+        FROM
+            tb_recommend_type trt
+        WHERE
+            trt.recommend_type_name = #{recommendTypeName}
+    </select>
+
+    <!-- recommend list 조회 -->
+    <select id="selectRecommendList" resultType="Recommend">
+        /* KakaoBotRepository - selectRecommendList */
+        SELECT
+            recommend_idx
+            , recommend_type_idx
+            , recommend_content
+            , read_count
+        FROM
+            tb_recommend tr
+        WHERE
+            tr.recommend_type_idx = #{recommendTypeIdx}
+    </select>
+
+    <!-- recommend 존재여부 -->
+    <select id="selectRecommendExists" resultType="int">
+        /* KakaoBotRepository - selectRecommendExists */
+        SELECT EXISTS (
+            SELECT
+                tr.recommend_idx
+            FROM
+                tb_recommend tr
+            <where>
+                and tr.recommend_type_idx = #{recommendTypeIdx}
+                and tr.recommend_content = #{recommendContent}
+            </where>
+        ) AS selectExist
+    </select>
+
+    <!-- recommend 추가 -->
+    <insert id="insertRecommend" useGeneratedKeys="true" keyProperty="recommendIdx">
+        /* KakaoBotRepository insertRecommend */
+        INSERT INTO tb_recommend(
+            recommend_type_idx, recommend_content
+        )
+        VALUES (
+                   #{recommendTypeIdx}, #{recommendContent}
+               )
+    </insert>
+
+    <!-- 마지막 idx 가져오기 -->
+    <select id="selectRecommendTypeLastIdx" resultType="int">
+        /* KakaoBotRepository selectRecommendTypeLastIdx */
+        SELECT
+            recommend_type_idx
+        FROM
+            tb_recommend_type trt
+        ORDER BY recommend_type_idx DESC
+        LIMIT 0, 1
+    </select>
+
+    <!-- recommend 추가 -->
+    <insert id="insertRecommendType" useGeneratedKeys="true" keyProperty="recommendIdx">
+        /* KakaoBotRepository insertRecommendType */
+        INSERT INTO tb_recommend_type(
+            recommend_type_idx, recommend_type_name, is_random
+        )
+        VALUES (
+                   #{recommendTypeIdx}, #{recommendTypeName}, #{isRandom}
+               )
+    </insert>
+</mapper>
